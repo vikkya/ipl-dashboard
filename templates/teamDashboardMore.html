@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Tean Dashboard</title>
+    <title>Team Dashboard</title>
 {% endblock %}
 
 {% block content %}
@@ -10,8 +10,8 @@
         <div class="col-3">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-end">Select Year</li>
-                {% for year in [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020] %}
-                    <li class="list-group-item text-end"> <a href="{{ url_for('moreboard', team=team.replace(' ','_'), year=year) }}">{{ year }}</a></li>
+                {% for yr in [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020] %}
+                    <li class="list-group-item text-end {{ 'bg-warning' if year|int == yr else '' }}"> <a class="text-dark" href="{{ url_for('moreboard', team=team.replace(' ','_'), year=yr) }}">{{ yr }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -23,7 +23,7 @@
                 <p>2. The team didn't place in that year.</p>
             {% else %}
             {% for i in data %}
-                <div class="card bg-success text-white mb-2">
+                <div class="card text-white mb-2 {{ 'bg-success' if i['team1'] == i['winner'] else 'bg-danger' }}">
                     <div class="card-body">
                     <div class="row">
                         <div class="col-6">
