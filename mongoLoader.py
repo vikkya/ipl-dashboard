@@ -11,7 +11,7 @@ from pymongo import MongoClient
 # print(username, pwd)
 
 
-CONNECTION_STRING = "mongodb+srv://vikky:E4-WtAZtR6aZ6nN@cluster0.rtqv5.mongodb.net/Matches?ssl_cert_reqs=CERT_NONE&ssl=true"
+CONNECTION_STRING = "mongodb+srv://user:pwd@host/dbname?ssl_cert_reqs=CERT_NONE&ssl=true"
 
 client = MongoClient(CONNECTION_STRING)
 
