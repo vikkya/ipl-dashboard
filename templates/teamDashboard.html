@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Tean Dashboard</title>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+<h1>{{ team }}</h1>
+
+<h6>Latest Matches</h6>
+<div class="card bg-success text-white">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <h6 class="card-subtitle mb-2">vs</h6>
+        <h4 class="card-title"><a class="text-white" href="{{ url_for('board', team=data[0]['team2'].replace(' ', '_')) }}">{{ data[0]['team2'] }}</a></h3>
+        <h5 class="card-title">{{ data[0]['date']|datetime_format }}</h4>
+        <p class="card-text">at {{ data[0]['venue'] }}</p>
+        <p class="card-text">{{ data[0]['winner'] }} won by {{ data[0]['result_margin'] + ' ' + data[0]['result'] }}</p>
+      </div>
+      <div class="col-6 text-end">
+        {% if data[0]['team1'] == data[0]['toss_winner'] and data[0]['toss_decision'] == 'bat' %}
+        <p class="mb-0">
+          <b>First Innings</b><br/>
+          <span>{{ data[0]['team1'] }}</span>
+        </p>
+        <p class="mb-0">
+          <b>Second Innings</b><br/>
+          <span>{{ data[0]['team2'] }}</span>
+        </p>
+        {% else %}
+        <p class="mb-0">
+          <b>First Innings</b><br/>
+          <span>{{ data[0]['team2'] }}</span>
+        </p>
+        <p class="mb-0">
+          <b>Second Innings</b><br/>
+          <span>{{ data[0]['team1'] }}</span>
+        </p>
+        {% endif %}
+        <p class="mb-0">
+          <b>Man of the Match</b><br/>
+          <span>{{ data[0]['player_of_match'] }}</span>
+        </p>
+        <p class="mb-0">
+          <b>Umpires</b><br/>
+          <span>{{ data[0]['umpire1'] }}, {{ data[0]['umpire2'] }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid px-0 mt-2">
+    <div class="row">
+      {% for i in data[1:] %}
+        <div class="col-3">
+            <div class="card text-white {{ 'bg-success' if i['team1'] == i['winner'] else 'bg-danger' }}">
+                <div class="card-body">
+                  <h6 class="card-subtitle mb-2">vs</h6>
+                  <h4 class="card-title"><a class="text-white" href="{{ url_for('board', team=data[0]['team2'].replace(' ', '_')) }}">{{ i['team2'] }} </a></h3>
+                  <p class="card-text">at {{ i['venue'] }}</p>
+                  <p class="card-text">{{ i['winner'] }} won by {{ i['result_margin'] + ' ' + i['result'] }}</p>
+                </div>
+              </div>
+        </div>
+        {% endfor %}
+        <div class="col-3 m-auto text-center">
+            <a href="{{ url_for('moreboard', team=team.replace(' ', '_'), year=2020) }}">More ></a>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

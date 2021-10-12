@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Tean Dashboard</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-end">Select Year</li>
+                {% for year in [2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020] %}
+                    <li class="list-group-item text-end"> <a href="{{ url_for('moreboard', team=team.replace(' ','_'), year=year) }}">{{ year }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-9">
+            <h2>{{ team }}</h2>
+            {% if data|length == 0 %}
+                <p>No data found. 1 of 2 reasons might be the cause.</p>
+                <p>1. Team name has changed</p>
+                <p>2. The team didn't place in that year.</p>
+            {% else %}
+            {% for i in data %}
+                <div class="card bg-success text-white mb-2">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                        <h6 class="card-subtitle mb-2">vs</h6>
+                        <h4 class="card-title"><a class="text-white" href="{{ url_for('board', team=i['team2'].replace(' ', '_')) }}">{{ i['team2'] }}</a></h3>
+                        <h5 class="card-title">{{ i['date']|datetime_format }}</h4>
+                        <p class="card-text">at {{ i['venue'] }}</p>
+                        <p class="card-text">{{ i['winner'] }} won by {{ i['result_margin'] + ' ' + i['result'] }}</p>
+                        </div>
+                        <div class="col-6 text-end">
+                        {% if i['team1'] == i['toss_winner'] and i['toss_decision'] == 'bat' %}
+                        <p class="mb-0">
+                            <b>First Innings</b><br/>
+                            <span>{{ i['team1'] }}</span>
+                        </p>
+                        <p class="mb-0">
+                            <b>Second Innings</b><br/>
+                            <span>{{ i['team2'] }}</span>
+                        </p>
+                        {% else %}
+                        <p class="mb-0">
+                            <b>First Innings</b><br/>
+                            <span>{{ i['team2'] }}</span>
+                        </p>
+                        <p class="mb-0">
+                            <b>Second Innings</b><br/>
+                            <span>{{ i['team1'] }}</span>
+                        </p>
+                        {% endif %}
+                        <p class="mb-0">
+                            <b>Man of the Match</b><br/>
+                            <span>{{ i['player_of_match'] }}</span>
+                        </p>
+                        <p class="mb-0">
+                            <b>Umpires</b><br/>
+                            <span>{{ i['umpire1'] }}, {{ i['umpire2'] }}</span>
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

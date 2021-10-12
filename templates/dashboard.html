@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Home</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-2">
+        <div class="row">
+            {% for i in data %}
+            <div class="col-6 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                      <h1> <a href="{{url_for('board', team=i.replace(' ', '_'))}}">{{ i }}</a></h1>
+                    </div>
+                  </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
