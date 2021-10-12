@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Tean Dashboard</title>
+    <title>Team Dashboard</title>
 {% endblock %}
 
 {% block content %}
@@ -9,7 +9,7 @@
 <h1>{{ team }}</h1>
 
 <h6>Latest Matches</h6>
-<div class="card bg-success text-white">
+<div class="card text-white {{ 'bg-success' if data[0]['team1'] == data[0]['winner'] else 'bg-danger' }}">
   <div class="card-body">
     <div class="row">
       <div class="col-6">
